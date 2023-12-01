@@ -1,0 +1,65 @@
+.menu-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .menu {
+    background-color: #f4f4f4;
+    display: flex;
+    padding: 2%;
+    transition: transform 0.3s ease;
+  }
+  
+  .menu.hidden {
+    transform: translateY(100%);
+  }
+  
+  .menu-item {
+    background-size: cover;
+    margin-left: 11%;
+    position: relative;
+    width: 8vw;
+  }
+
+  .menu-arrow {
+    position: absolute;
+    background-color: #f4f4f4;
+    border-radius: 50%;
+    margin-top: 2vw;
+    margin-left: 2vw;
+  }
+  
+  
+  /* Adicione as imagens de alta resolução */
+  .menu-item.home {
+    background-image: url('../image/icon-home.png');
+  }
+  
+  .menu-item.agenda {
+    background-image: url('../image/icon-agenda.png');
+  }
+  
+  .menu-item.sacramento {
+    background-image: url('../image/icon-sacramento.png');
+  }
+  
+  .menu-item.frequencia {
+    background-image: url('../image/icon-frequencia.png');
+  }
+  
+  .menu-item.topicos {
+    background-image: url('../image/icon-topicos.png');
+  }
+  
+  @media screen and (max-width: 3000vw) {
+    .menu {
+      max-width: 100vw;
+    }
+  
+    .menu-item {
+      width: 8vw;
+    }
+  }
+  

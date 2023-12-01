@@ -1,0 +1,119 @@
+
+.profile-edit-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .profile-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15vw;
+    height: 15vw;
+    margin-top: 1.2vw;
+    border-radius: 50%;
+  }
+  
+  .unit-info-name {
+    font-size: 20px;
+    color: #007D85;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .unit-info-number {
+    font-size: 18px;
+    color: #007D85;
+    margin-bottom: 10px;
+    text-align: center;
+    margin-bottom: 15%;
+    margin-top: -12px;
+  }
+  
+  .profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .profile-edit-label {
+    font-size: 16px;
+    color: #007D85;
+    margin-top: 15px;
+    text-align: left;
+  }
+  
+  .profile-edit-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #007D85;
+    box-sizing: border-box;
+    outline: none;
+  }
+  
+  .buttons-container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .profile-edit-save-btn {
+    background-color: #007D85;
+    width: 49%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.profile-edit-btn {
+    background-color: #007D85;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 12%;
+}
+
+.profile-edit-cancel-btn {
+    width: 49%;
+    background-color: #a39d9d;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.profile-edit-close {
+    position: absolute;
+    top: 3px;
+    right: 20px;
+    font-size: 20px;
+    background: none;
+    color: #007D85;
+    border: none;
+    margin-top: 15px;
+    text-align: right;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+  
+  .profile-edit-save-btn:hover {
+    background-color: #005a61;
+    color: #fff;
+  }
+
+  .titulo-perfil {
+    text-align: left;
+    color:#007D85;
+    margin-bottom: 2%;
+  }

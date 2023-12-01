@@ -1,0 +1,85 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.home-title {
+  font-size: 4.2vw;
+  padding: 10px;
+  margin: 12% auto;
+  margin-top: 15%;
+  margin-left: 15px;
+  color: #007D85;
+  text-align: left;
+}
+
+.menu-cards-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 10%;
+}
+
+.menu-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 5px;
+  width: 28.2vw;
+  height: 23vw;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 3vw;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+}
+
+.menu-card:hover {
+  transform: scale(1.05);
+}
+
+.icons {
+  width: 80%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.menu-card-text {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 3.2vw;
+  color: #007D85;
+}
+
+.subtitle-acessados {
+  font-size: 4vw;
+  margin-bottom: 1%;
+  margin-right: 58vw;
+  color: #007D85;
+  font-weight: bold;
+}
+
+.no-accessed-menus-text {
+  font-size: 3.8vw;
+  color: #850000;
+  text-align: left;
+  margin-left: -15%;
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+@media screen and (min-width: 3000px) {
+  .menu-card {
+    width: 20%;
+  }
+}

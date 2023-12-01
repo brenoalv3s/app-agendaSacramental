@@ -1,0 +1,34 @@
+.historico-frequencia {
+    padding: 2vw;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 0.5em;
+    margin: 2vw;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 15%;
+}
+
+.historico-frequencia h3 {
+    color: #007D85;
+    font-size: 4vw;
+}
+
+.historico-frequencia h1 {
+    color: #007D85;
+    font-size: 10vw;
+}
+
+.ultima-frequencia {
+    margin-top: 1em;
+}
+
+.ultima-frequencia p {
+    margin: 0.8em 0;
+}
+
+.nenhuma-frequencia {
+    color: red;
+    font-style: italic;
+    font-size: 1.5em;
+}

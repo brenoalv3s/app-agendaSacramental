@@ -1,0 +1,95 @@
+.profile-menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-info span {
+    margin-right: 8px;
+  }
+  
+  .profile-icon {
+    width: 15%;
+    margin-left: 85%;
+    margin-top: 7px;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    font-size: 2.4vw;
+    width: 35%;
+    top: 100%;
+    right: 0;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display:none;
+    z-index: 2;
+  }
+  
+  .profile-menu.open .profile-dropdown {
+    display: block;
+  }
+  
+  .profile-dropdown div {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.tituloSubmenu {
+  font-size: 4.8vw !important;
+  color: #007D85 !important;
+}
+
+.submenu-perfil{
+  font-size: 4.8vw !important;
+  color: #007D85 !important;
+  margin-left: 8px;
+  width: 80%;
+  margin-bottom: -7px;
+}
+
+.submenu-sobre {
+  font-size: 4.8vw !important;
+  color: #007D85 !important;
+  margin-left: 17px;
+  width: 80%;
+}
+
+.span-sobre {
+  margin-left: 10px;
+}
+
+.submenu-exit {
+  font-size: 4.8vw !important;
+  color: #007D85 !important;
+  margin-left: 8px;
+  width: 80%;
+}
+
+.profile-icon-submenu {
+  width: 85%;
+  margin-right: 3px;
+  margin-left: -35px;
+}
+
+.about-icon-submenu {
+  width: 45%;
+  margin-right: 3px;
+  margin-left: -35px;
+}
+
+.exit-icon-submenu {
+  width: 55%;
+  margin-right: 8px;
+  margin-left: -23px;
+}

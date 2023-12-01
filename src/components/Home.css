@@ -1,0 +1,44 @@
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.home-title {
+  font-size: 10vw; /* Ajuste conforme necessário */
+  padding: 15px;
+  margin: 15% auto;
+  margin-top: 15%;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  color: #007D85;
+  text-align: left;
+}
+
+.loading {
+  font-size: 18px;
+  color: #888;
+}
+
+.error {
+  font-size: 18px;
+  color: red;
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 600px) {
+  .home-container {
+    max-width: 100%;
+    padding: 10px;
+  }
+  
+  .home-title {
+    font-size: 7vw; /* Ajuste conforme necessário */
+    margin-top: 15%;
+    margin-left: 10px;
+  }
+  
+  .loading, .error {
+    font-size: 16px;
+  }
+}

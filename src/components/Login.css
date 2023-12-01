@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.img-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 30%;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-login {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #007D85;
+  box-sizing: border-box;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: #007D85;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.button-container a {
+  font-weight: bold;
+}
+
+button {
+  background-color: #007D85;
+  width: 60%;
+  height: 40px;
+  color: #fff;
+  padding: 5px;
+  border: none;
+  border-radius: 2%;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px auto 0;
+}
+
+button:hover {
+  background-color: #f4f4f4;
+  color: #007D85;
+  font-weight: bold;
+}
+
+input:hover {
+  background-color: #f4f4f4;
+}
+
+@media screen and (max-width: 600px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  input,
+  button {
+    margin-bottom: 15px;
+  }
+}
+
+.button-container {
+  text-align: center;
+}
+
+.esqueceuSenha {
+  font-size: 16px;
+  color: #007D85;
+  margin-top: -1px;
+  text-align: left;
+}
+
+.cadastro {
+  font-size: 16px;
+  color: #007D85;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+a:hover {
+  color: rgb(91, 168, 177);
+}
+
+.label-login {
+  font-size: 16px;
+  color: #007D85;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.icon-exibir-login {
+  display: flex;
+  margin-left: 340px;
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  z-index: 1;
+}
+
+.icon-exibir-login img {
+  width: 21px;
+  height: 21px;
+  margin-top: -40px;
+  margin-bottom: -45px;
+  padding: 2px;
+}
