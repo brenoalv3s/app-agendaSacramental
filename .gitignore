@@ -90,7 +90,7 @@ webpack.config.js
 /dist
 
 # diretórios de saída
-/build
+# /build
 
 # diretórios de saída
 /out
