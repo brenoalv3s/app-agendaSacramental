@@ -1,0 +1,240 @@
+# dependências
+/node_modules
+
+# arquivos de log
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# diretórios de saída
+dist
+
+# diretórios de desenvolvimento
+.vscode/
+.idea/
+.history/
+.vs/
+
+# arquivos de configuração do sistema
+.env
+
+# arquivos de configuração do IDE
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# arquivos de configuração do VS Code
+.vscode/*
+.history/*
+
+# arquivos de configuração do JetBrains
+.idea/*
+
+# arquivos de configuração do VisualStudio
+.vs/*
+
+# arquivos de configuração do Lerna
+lerna-debug.log
+
+# arquivos de configuração do Yarn
+yarn-error.log
+
+# diretórios locais
+.DS_Store
+
+# arquivos de configuração do npm
+npm-debug.log
+
+# arquivos de configuração do yarn
+yarn-error.log
+
+# diretórios de teste
+/coverage
+
+# diretórios de saída
+/build
+
+# arquivos de configuração do eslint
+.eslintcache
+
+# arquivos de configuração do stylelint
+.stylelintcache
+
+# arquivos de configuração do prettier
+.prettiercache
+
+# diretórios de saída
+/out-tsc
+
+# arquivos de configuração do TypeScript
+tsconfig.tsbuildinfo
+
+# arquivos de configuração do Babel
+.babel.json
+
+# arquivos de configuração do Jest
+.jest
+
+# arquivos de configuração do webpack
+webpack.config.js
+
+# diretórios de saída
+/public
+
+# diretórios de saída
+/dist
+
+# diretórios de saída
+/build
+
+# diretórios de saída
+/out
+
+# diretórios de saída
+/output
+
+# diretórios de saída
+/coverage
+
+# diretórios de saída
+/reports
+
+# diretórios de saída
+/docs
+
+# diretórios de saída
+/site
+
+# diretórios de saída
+/website
+
+# diretórios de saída
+/tmp
+
+# diretórios de saída
+/temp
+
+# diretórios de saída
+/log
+
+# diretórios de saída
+/logs
+
+# diretórios de saída
+/cache
+
+# diretórios de saída
+/downloads
+
+# diretórios de saída
+/packages
+
+# diretórios de saída
+/bower_components
+
+# diretórios de saída
+/jspm_packages
+
+# diretórios de saída
+/typings
+
+# diretórios de saída
+/node_modules
+
+# diretórios de saída
+/venv
+
+# diretórios de saída
+/env
+
+# diretórios de saída
+/venv
+
+# diretórios de saída
+/__pycache__
+
+# diretórios de saída
+/.pytest_cache
+
+# diretórios de saída
+/.mypy_cache
+
+# diretórios de saída
+/.ropeproject
+
+# diretórios de saída
+/.pants.d
+
+# diretórios de saída
+/vendor
+
+# diretórios de saída
+/bin
+
+# diretórios de saída
+/obj
+
+# diretórios de saída
+/target
+
+# diretórios de saída
+/.history
+
+# diretórios de saída
+/.sass-cache
+
+# diretórios de saída
+/.bundle
+
+# diretórios de saída
+/.vscode
+
+# diretórios de saída
+/.idea
+
+# diretórios de saída
+/.c9
+
+# diretórios de saída
+/.svn
+
+# diretórios de saída
+/.hg
+
+# diretórios de saída
+/.git
+
+# diretórios de saída
+/.bzr
+
+# diretórios de saída
+/_darcs
+
+# diretórios de saída
+/.DS_Store
+
+# diretórios de saída
+/Thumbs.db
+
+# diretórios de saída
+/.Spotlight-V100
+
+# diretórios de saída
+/.Trashes
+
+# diretórios de saída
+/ehthumbs.db
+
+# diretórios de saída
+/Thumbs.db:encryptable
+
+# diretórios de saída
+/.Trashes
+
+# diretórios de saída
+/.fseventsd
