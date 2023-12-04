@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getFirestore, doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { firebaseApp } from "../config/firebaseConfig";
@@ -23,8 +23,23 @@ const menus = [
 
 const Menu = () => {
   const navigate = useNavigate();
-  const [setUserDoc] = useState(null);
   const [menuVisible, setMenuVisible] = useState(true);
+
+  useEffect(() => {
+    const fetchUserDoc = async () => {
+      const auth = getAuth(firebaseApp);
+      const user = auth.currentUser;
+
+      if (user) {
+        const db = getFirestore(firebaseApp);
+        const userDocRef = doc(db, 'alas', user.uid);
+        const userDocSnapshot = await getDoc(userDocRef);
+        // Aqui você pode fazer algo com userDocSnapshot se necessário
+      }
+    };
+
+    fetchUserDoc();
+  }, []);
 
   const handleNavigation = async (path, menuId) => {
     const selectedMenu = menus.find(menu => menu.id === menuId);
@@ -71,8 +86,6 @@ const Menu = () => {
           // Create a new menu array with the selected menu
           updatedMenus = [{ path, timestamp: new Date(), nome: selectedMenu.nome }];
         }
-
-        setUserDoc(userDocSnapshot);
 
         // Update the document with the new array of menus
         await updateDoc(userDocRef, { menus: updatedMenus });
