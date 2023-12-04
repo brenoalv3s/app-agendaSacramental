@@ -1,7 +1,7 @@
 .sacramento-container {
     display: flex;
     flex-direction: column;
-   
+    padding: 30px;
     max-width: 600px;
     margin: 0 auto;
     text-align: left;
@@ -14,14 +14,11 @@
     margin-bottom: 2%;
     width: 10vw;
     height: 10vw;
-    margin-top: 10.0vw;
     border-radius: 10%;
 }
 
 .sacramento-info-name {
     font-size: 20px;
-    padding: 30px;
-    margin-top: -10%;
     color: #007D85;
     text-align: center;
     font-weight: bold;
@@ -30,22 +27,16 @@
 .sacramento-info-number {
     font-size: 18px;
     color: #007D85;
-    padding: -30px;
     margin-bottom: 15%;
     text-align: center;
-    margin-top: -30px;
 }
 
 .sacramento-subtítulo {
-    padding: 30px;
-    margin-top: -15%;
     text-align: left;
     color: #007D85;
 }
 
 .sacramento-paragrafo{
-    padding: 30px;
-    margin-top: -16%;
     font-size: 16px;
 }
 

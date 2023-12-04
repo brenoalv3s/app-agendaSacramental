@@ -37,10 +37,7 @@ const Sacramento = () => {
           Essas orações contêm convênios e uma promessa. 
           (D&C 20:77, 79.)
         </i>
-
-        {/* Novos cards */}
         <div className="sacramento-cards-container">
-          {/* Card Bênção do Pão */}
           <div className="sacramento-card">
             <img src={iconPao} alt="Bênção do Pão" />
             <span className="sacramento-card-title">Bênção do Pão</span>
