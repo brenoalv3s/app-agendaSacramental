@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
   }
   
   .menu {
@@ -63,3 +63,12 @@
     }
   }
   
+  .menu-item.selected {
+    background-color: #a09e9e;
+    border-radius: 50%;
+  }
+  
+  .menu-arrow.selected {
+    background-color: #a09e9e;
+    border-radius: 50%;
+  }

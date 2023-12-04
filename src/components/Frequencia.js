@@ -39,7 +39,6 @@ const Frequencia = () => {
       setNomeUnidade(storedNomeUnidade);
       setNumeroUnidade(storedNumeroUnidade);
 
-      // Fetch existing data from Firestore when component mounts
       fetchDataFromFirestore();
       fetchHistoricoFromFirestore();
     }
@@ -61,7 +60,6 @@ const Frequencia = () => {
           const data = unidadeSnap.data();
           setQuantidade(data.quantidade || "");
 
-          // Converta a data para uma instância válida de JavaScript Date
           const firestoreData = data.data ? data.data.toDate() : null;
           setData(firestoreData || "");
         }
@@ -85,9 +83,9 @@ const Frequencia = () => {
 
         if (historicoSnap.exists()) {
           const historicoData = historicoSnap.data();
-          const historicoArray = historicoData.frequencia || []; // Certificar-se de que é uma array
+          const historicoArray = historicoData.frequencia || [];
 
-          setHistorico(historicoArray); // Atualizar o estado com a array válida
+          setHistorico(historicoArray);
         }
       }
     } catch (error) {
@@ -105,7 +103,6 @@ const Frequencia = () => {
         const historicoDocPath = `alas/${user.uid}`;
         const historicoDoc = doc(firestore, historicoDocPath);
 
-        // Verificar se a data é uma instância válida de JavaScript Date
         if (!(data instanceof Date) || isNaN(data.getTime())) {
           setInvalidDataMessage("Data inválida.");
           setTimeout(() => {
@@ -122,13 +119,11 @@ const Frequencia = () => {
           return;
         }
 
-        // Fetch existing data from Firestore when component mounts
         const historicoSnap = await getDoc(historicoDoc);
         const historicoData = historicoSnap.exists()
           ? historicoSnap.data().frequencia || []
           : [];
 
-        // Verificar se já existe uma frequência registrada para a data escolhida
         const novaDataValida = data instanceof Date ? data : new Date();
 
         const frequenciaExistente = historicoData.find(
@@ -147,7 +142,6 @@ const Frequencia = () => {
           return;
         }
 
-        // Adiciona a nova frequência ao histórico
         await updateDoc(historicoDoc, {
           frequencia: arrayUnion({
             quantidade: parseInt(quantidade),
@@ -165,23 +159,19 @@ const Frequencia = () => {
           return;
         }
 
-        // Atualiza os dados e histórico após salvar
         fetchDataFromFirestore();
         fetchHistoricoFromFirestore();
       }
     } catch (error) {
       console.error("Erro ao salvar no banco de dados:", error);
-      // Lógica de tratamento de erro, se necessário
     }
   };
 
   const handleEditHistorico = (index) => {
-    // Ativa o modo de edição e define o índice do item sendo editado
     setModoEdicao(true);
     setIndiceEditando(index);
     setReloadTable((prev) => !prev);
 
-    // Preenche os campos de edição com os valores atuais
     const itemEditando = historico[index];
     setEditandoFrequencia(itemEditando.quantidade);
     setEditandoData(new Date(itemEditando.data.seconds * 1000));
@@ -200,25 +190,20 @@ const Frequencia = () => {
         const historicoSnap = await getDoc(historicoDoc);
 
         if (historicoSnap.exists()) {
-          // Obter o histórico atual
           const historicoData = historicoSnap.data();
           const historicoAtual = historicoData.frequencia || [];
 
-          // Remover o item do histórico
           historicoAtual.splice(index, 1);
 
-          // Atualizar o documento no Firestore
           await updateDoc(historicoDoc, {
             frequencia: historicoAtual,
           });
 
-          // Atualiza o histórico após a exclusão
           fetchHistoricoFromFirestore();
         }
       }
     } catch (error) {
       console.error("Erro ao excluir item do histórico:", error);
-      // Lógica de tratamento de erro, se necessário
     }
   };
 
@@ -235,40 +220,29 @@ const Frequencia = () => {
         const historicoSnap = await getDoc(historicoDoc);
 
         if (historicoSnap.exists()) {
-          // Obter o histórico atual
           const historicoData = historicoSnap.data();
           const novoHistorico = [...historicoData.frequencia];
 
-          // Verifica se o índiceEditando não é nulo antes de utilizá-lo
           if (indiceEditando !== null) {
-            // Atualizar o item no histórico com os novos valores
-            // const itemEditando = historico[indiceEditando];
-
-            // Verificar se já existe uma frequência registrada para a nova data escolhida
             const novaDataValida =
               editandoData instanceof Date ? editandoData : new Date();
 
-            // Atualize o item no histórico com os novos valores
             novoHistorico[indiceEditando] = {
               quantidade: parseInt(editandoFrequencia),
               data: novaDataValida,
             };
 
-            // Atualiza o documento de histórico no Firestore
             await updateDoc(historicoDoc, {
               frequencia: novoHistorico,
             });
 
-            // Desativa o modo de edição e limpa os estados de edição
             setModoEdicao(false);
             setIndiceEditando(null);
             setEditandoFrequencia("");
             setEditandoData("");
 
-            // Atualiza o estado local
             setHistorico(novoHistorico);
 
-            // Atualiza os dados e histórico após salvar
             fetchDataFromFirestore();
             fetchHistoricoFromFirestore();
           }
@@ -276,7 +250,6 @@ const Frequencia = () => {
       }
     } catch (error) {
       console.error("Erro ao salvar a edição no histórico:", error);
-      // Lógica de tratamento de erro, se necessário
     }
   };
 
@@ -388,9 +361,8 @@ const Frequencia = () => {
                       ? historico
                           .filter((item) => {
                             if (!searchTerm) {
-                              return true; // Inclua todos os itens se searchTerm estiver vazio
+                              return true;
                             } else {
-                              // Converta o timestamp para um objeto de data JavaScript para comparação
                               const itemDate = new Date(
                                 item.data.seconds * 1000
                               );

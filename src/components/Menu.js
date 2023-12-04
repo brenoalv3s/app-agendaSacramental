@@ -24,6 +24,7 @@ const menus = [
 const Menu = () => {
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(true);
+  const [selectedIcon, setSelectedIcon] = useState(null);
 
   useEffect(() => {
     const fetchUserDoc = async () => {
@@ -90,6 +91,7 @@ const Menu = () => {
         // Update the document with the new array of menus
         await updateDoc(userDocRef, { menus: updatedMenus });
       }
+      setSelectedIcon(menuId);
     }
   };
 
@@ -100,7 +102,7 @@ const Menu = () => {
   return (
     <div className="menu-container">
       <img
-        className="menu-item menu-arrow"
+        className={`menu-item menu-arrow ${selectedIcon === 'arrow' ? 'selected' : ''}`}
         src={menuVisible ? arrowDownIcon : arrowUpIcon}
         alt="Arrow"
         onClick={toggleMenuVisibility}
@@ -109,7 +111,7 @@ const Menu = () => {
         {menus.map((menu) => (
           <img
             key={menu.id}
-            className="menu-item"
+            className={`menu-item ${selectedIcon === menu.id ? 'selected' : ''}`}
             src={menu.icon}
             alt={menu.name}
             onClick={() => handleNavigation(menu.path, menu.id)}
