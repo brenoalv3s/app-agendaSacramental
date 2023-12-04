@@ -64,12 +64,13 @@
   .sacramento-card img {
     width: 40%;
     height: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 5%;
   }
   
   .sacramento-card-title {
     font-size: 16px;
     color: #007D85;
     margin-right: 5%;
+    margin-top: 5%;
   }
   

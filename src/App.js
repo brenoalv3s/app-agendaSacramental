@@ -11,6 +11,8 @@ import Profile from './components/ProfileEdit';
 import Sobre from './components/Sobre';
 import Agenda from './components/Agenda'
 import Sacramento from './components/Sacramento'
+import BencaoPao from './components/BencaoPao'
+import BencaoAgua from './components/BencaoAgua'
 import Frequencia from './components/Frequencia'
 import Topicos from './components/Topicos'
 
@@ -29,6 +31,8 @@ function App() {
           <Route path="/sacramento" element={<Sacramento />} />
           <Route path="/frequencia" element={<Frequencia />} />
           <Route path="/topicos" element={<Topicos />} />
+          <Route path="/bencao-pao" element={<BencaoPao />} />
+          <Route path="/bencao-agua" element={<BencaoAgua />} />
         </Routes>
       </Router>
     </FirebaseAppProvider>
