@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getFirestore, doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { firebaseApp } from "../config/firebaseConfig";
@@ -23,7 +23,7 @@ const menus = [
 
 const Menu = () => {
   const navigate = useNavigate();
-  const [userDoc, setUserDoc] = useState(null);
+  const [setUserDoc] = useState(null);
   const [menuVisible, setMenuVisible] = useState(true);
 
   const handleNavigation = async (path, menuId) => {

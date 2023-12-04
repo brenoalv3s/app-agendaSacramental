@@ -19,7 +19,7 @@ const Frequencia = () => {
   const [quantidade, setQuantidade] = useState("");
   const [data, setData] = useState("");
   const [exibirHistorico, setExibirHistorico] = useState(false);
-  const [historico, setHistorico] = useState([]); // Mudança aqui
+  const [historico, setHistorico] = useState([]);
   const [editandoFrequencia, setEditandoFrequencia] = useState("");
   const [editandoData, setEditandoData] = useState(null);
   const [invalidDataMessage, setInvalidDataMessage] = useState("");
@@ -242,7 +242,7 @@ const Frequencia = () => {
           // Verifica se o índiceEditando não é nulo antes de utilizá-lo
           if (indiceEditando !== null) {
             // Atualizar o item no histórico com os novos valores
-            const itemEditando = historico[indiceEditando];
+            // const itemEditando = historico[indiceEditando];
 
             // Verificar se já existe uma frequência registrada para a nova data escolhida
             const novaDataValida =

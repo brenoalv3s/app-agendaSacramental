@@ -15,23 +15,22 @@ import "firebase/compat/auth";
 
 import "./CadastroUnidade.css";
 
-
 const CadastroUnidade = () => {
   const [nomeUnidade, setNomeUnidade] = useState("");
   const [numeroUnidade, setNumeroUnidade] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [senhaDiferente, setSenhaDiferente] = useState(false);
+  const [senhaDiferente] = useState(false);
   const [senhaValida, setSenhaValida] = useState(false);
   const [textHidden, setTextHidden] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [unidadeExistente, setUnidadeExistente] = useState(false);
-  const [nomeUnidadeExistente, setNomeUnidadeExistente] = useState(false);
-  const [emailExistente, setEmailExistente] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [exibirSenha, setExibirSenha] = useState(false);
   const [loadingCadastro, setLoadingCadastro] = useState(false);
+  const [unidadeExistsError, setUnidadeExistsError] = useState(false);
+  const [nomeUnidadeExistsError, setNomeUnidadeExistsError] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState(false);
 
   const firestore = getFirestore(firebaseApp);
   const navigate = useNavigate();
@@ -53,42 +52,64 @@ const CadastroUnidade = () => {
     setLoadingCadastro(true);
 
     try {
-      const auth = getAuth();
-      const user = await createUserWithEmailAndPassword(auth, email, senha);
+      setUnidadeExistsError(false);
+      setNomeUnidadeExistsError(false);
+      setEmailExistsError(false);
 
-      const unidadeDocPath = `alas/${user.user.uid}`;
-      const unidadeDoc = doc(firestore, unidadeDocPath);
+      // Executa todas as verificações em paralelo
+      const [unidadeExists, nomeUnidadeExists, emailExists] = await Promise.all([
+        checkUnidadeExists(),
+        checkNomeUnidadeExists(),
+        checkEmailExists(),
+      ]);
 
-      await setDoc(unidadeDoc, {
-        user: {
-          email,
-          nomeUnidade: nomeUnidade,
-          numeroUnidade,
-        },
-      });
+      if (unidadeExists || nomeUnidadeExists || emailExists) {
+        setUnidadeExistsError(unidadeExists);
+        setNomeUnidadeExistsError(nomeUnidadeExists);
+        setEmailExistsError(emailExists);
 
-      localStorage.setItem("nomeUnidade", nomeUnidade);
-      localStorage.setItem("numeroUnidade", numeroUnidade);
-      localStorage.setItem("email", email);
+        setLoadingCadastro(false);
+        return;
+      }
 
-      setShowSuccessMessage(true);
 
-      setNomeUnidade("");
-      setNumeroUnidade("");
-      setEmail("");
-      setSenha("");
-      setConfirmarSenha("");
-      setSenhaDiferente(false);
-    } catch (error) {
-      setShowErrorMessage(true);
-    } finally {
-      setLoadingCadastro(false);
+        const auth = getAuth();
+        await createUserWithEmailAndPassword(auth, email, senha);
 
-      setTimeout(() => {
-        setShowErrorMessage(false);
-      }, 3000);
-    }
-  };
+        const unidadeDocPath = `alas/${auth.currentUser.uid}`;
+        const unidadeDoc = doc(firestore, unidadeDocPath);
+
+        await setDoc(unidadeDoc, {
+          user: {
+            email,
+            nomeUnidade,
+            numeroUnidade,
+          },
+        });
+
+        localStorage.setItem("nomeUnidade", nomeUnidade);
+        localStorage.setItem("numeroUnidade", numeroUnidade);
+        localStorage.setItem("email", email);
+
+        setShowSuccessMessage(true);
+
+        setNomeUnidade("");
+        setNumeroUnidade("");
+        setEmail("");
+        setSenha("");
+        setConfirmarSenha("");
+      } catch (error) {
+        setShowErrorMessage(true);
+      } finally {
+        setTimeout(() => {
+          setLoadingCadastro(false);
+          setShowErrorMessage(false);
+          setUnidadeExistsError(false);
+          setNomeUnidadeExistsError(false);
+          setEmailExistsError(false);
+        }, 3000);
+      }
+    };
 
   const handleNumeroUnidadeChange = (event) => {
     const value = event.target.value.replace(/\D/g, "");
@@ -109,26 +130,29 @@ const CadastroUnidade = () => {
     setExibirSenha(!exibirSenha);
   };
 
-  const checkUnidadeExists = async () => {
+  const checkUnidadeExists = async (userUid) => {
     const q = query(
-      collection(firestore, "alas"),
+      collection(firestore, `alas/${userUid}/user`),
       where("numeroUnidade", "==", numeroUnidade)
     );
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   };
 
-  const checkNomeUnidadeExists = async () => {
+  const checkNomeUnidadeExists = async (userUid) => {
     const q = query(
-      collection(firestore, "alas"),
+      collection(firestore, `alas/${userUid}/user`),
       where("nomeUnidade", "==", nomeUnidade)
     );
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   };
 
-  const checkEmailExists = async () => {
-    const q = query(collection(firestore, "alas"), where("email", "==", email));
+  const checkEmailExists = async (userUid) => {
+    const q = query(
+      collection(firestore, `alas/${userUid}/user`),
+      where("email", "==", email)
+    );
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   };
@@ -237,24 +261,24 @@ const CadastroUnidade = () => {
                 Senhas não coincidem
               </p>
             )}
-            {unidadeExistente && (
+            {showErrorMessage && (
+              <p style={{ color: "red", marginTop: "5px" }}>
+                Por favor, preencha todos os campos obrigatórios
+              </p>
+            )}
+            {unidadeExistsError && (
               <p style={{ color: "red", marginTop: "5px" }}>
                 Unidade já cadastrada
               </p>
             )}
-            {nomeUnidadeExistente && (
+            {nomeUnidadeExistsError && (
               <p style={{ color: "red", marginTop: "5px" }}>
                 Nome da Unidade já existe
               </p>
             )}
-            {emailExistente && (
+            {emailExistsError && (
               <p style={{ color: "red", marginTop: "5px" }}>
                 E-mail já cadastrado
-              </p>
-            )}
-            {showErrorMessage && (
-              <p style={{ color: "red", marginTop: "5px" }}>
-                Por favor, preencha todos os campos obrigatórios
               </p>
             )}
             <br />

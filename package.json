@@ -6,7 +6,9 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@babel/plugin-proposal-private-property-in-object": "^1.0.6",
     "date-fns": "^2.30.0",
+    "domexception": "^4.0.0",
     "firebase": "^9.23.0",
     "react": "^18.2.0",
     "react-datepicker": "^4.23.0",
@@ -15,11 +17,15 @@
     "react-router-dom": "^6.20.0",
     "react-scripts": "5.0.1",
     "reactfire": "^4.2.3",
-    "web-vitals": "^2.1.4"
+    "rollup-plugin-terser": "^7.0.2",
+    "vercel": "^32.6.1",
+    "w3c-hr-time": "^1.0.2",
+    "web-vitals": "^2.1.4",
+    "workbox-cacheable-response": "^7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build --no-error-on-unmatched-pattern",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

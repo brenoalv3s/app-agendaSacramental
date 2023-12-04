@@ -11,13 +11,6 @@ import sacramentoIcon from '../image/icon-sacramento.png';
 import frequenciaIcon from '../image/icon-frequencia.png';
 import topicosIcon from '../image/icon-topicos.png';
 
-const menus = [
-  { id: 1, name: 'Agenda', icon: agendaIcon, path: '/agenda' },
-  { id: 2, name: 'Sacramento', icon: sacramentoIcon, path: '/sacramento' },
-  { id: 3, name: 'Frequência', icon: frequenciaIcon, path: '/frequencia' },
-  { id: 4, name: 'Tópicos', icon: topicosIcon, path: '/topicos' },
-];
-
 const MostAccessedMenus = () => {
   const [mostAccessedMenus, setMostAccessedMenus] = useState([]);
   const navigate = useNavigate();
