@@ -57,7 +57,7 @@ yarn-error.log
 /coverage
 
 # diretórios de saída
-# /build
+/build
 
 # arquivos de configuração do eslint
 .eslintcache
@@ -90,7 +90,7 @@ webpack.config.js
 /dist
 
 # diretórios de saída
-# /build
+/build
 
 # diretórios de saída
 /out
