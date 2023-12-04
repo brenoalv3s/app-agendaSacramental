@@ -33,7 +33,7 @@ const Menu = () => {
       if (user) {
         const db = getFirestore(firebaseApp);
         const userDocRef = doc(db, 'alas', user.uid);
-        const userDocSnapshot = await getDoc(userDocRef);
+        await getDoc(userDocRef); // Removed the declaration and unused assignment
         // Aqui você pode fazer algo com userDocSnapshot se necessário
       }
     };
