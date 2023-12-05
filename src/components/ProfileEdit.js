@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getFirestore, updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import './ProfileEdit.css';
+import iconProfile from '../image/icon-profile-menu.png'
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ const ProfileEdit = () => {
 
   return (
     <div className="profile-edit-container">
-      <img src="/icon-profile-menu.png" alt="Profile" className="profile-image" />
+      <img src={iconProfile} alt="Profile" className="profile-image" />
       <span className="unit-info-name">Ala {nomeUnidade}</span>
       <span className="unit-info-number">{numeroUnidade}</span>
       <h3 className='titulo-perfil'>Bispado da Ala</h3>
