@@ -129,7 +129,7 @@ const ProfileEdit = () => {
 
   return (
     <div className="profile-edit-container">
-      <img src="/icon-profile.png" alt="Profile" className="profile-image" />
+      <img src="/icon-profile-menu.png" alt="Profile" className="profile-image" />
       <span className="unit-info-name">Ala {nomeUnidade}</span>
       <span className="unit-info-number">{numeroUnidade}</span>
       <h3 className='titulo-perfil'>Bispado da Ala</h3>

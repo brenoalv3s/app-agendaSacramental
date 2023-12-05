@@ -9,7 +9,7 @@
   padding: 15px;
   margin: 15% auto;
   margin-top: 15%;
-  margin-bottom: 15px;
+  margin-bottom: -5%;
   margin-left: 15px;
   color: #007D85;
   text-align: left;
@@ -33,12 +33,17 @@
   }
   
   .home-title {
-    font-size: 7vw; /* Ajuste conforme necessário */
-    margin-top: 15%;
+    font-size: 7vw;
+    margin-top: -3%;
     margin-left: 10px;
   }
   
   .loading, .error {
     font-size: 16px;
   }
+}
+
+.header {
+  width: 100%;
+  height: 50%;
 }

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Navbar.css'
+import iconProfile from '../image/icon-profile-menu.png'
 
 const Navbar = ({ nomeUnidade }) => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Navbar = ({ nomeUnidade }) => {
           <div className="submenu-perfil" onClick={handleProfileClick}>
             <img
               className="profile-icon-submenu"
-              src="/icon-profile.png"
+              src={iconProfile}
               alt="Perfil"
             />
             <span>Perfil</span>

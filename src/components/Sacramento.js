@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importe useNavigate do react-router-dom
+import { useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import sacramentoIcon from "../image/icon-sacramento.png";
 import iconPao from "../image/icon-pao.png";
@@ -32,28 +32,37 @@ const Sacramento = () => {
   return (
     <nav>
       <div className="sacramento-container">
-          <>
-            <img
-              src={sacramentoIcon}
-              alt="sacramento"
-              className="sacramento-image"
-            />
-            <span className="sacramento-info-name">Ala {nomeUnidade}</span>
-            <span className="sacramento-info-number">{numeroUnidade}</span>
-            <h3 className="sacramento-subtítulo">Orações Sacramentais</h3>
-            <br />
-            <i className="sacramento-paragrafo">
-              As orações sacramentais foram reveladas pelo Senhor. Essas orações
-              contêm convênios e uma promessa. (D&C 20:77, 79.)
-            </i>
-          </>
-        
+        <>
+          <img
+            src={sacramentoIcon}
+            alt="sacramento"
+            className="sacramento-image"
+          />
+          <span className="sacramento-info-name">Ala {nomeUnidade}</span>
+          <span className="sacramento-info-number">{numeroUnidade}</span>
+          <h3 className="sacramento-subtítulo">Orações Sacramentais</h3>
+          <br />
+          <i className="sacramento-paragrafo">
+            Durante Seu ministério entre os nefitas e lamanitas, Jesus Cristo
+            deu autoridade a Seus discípulos e ordenou-lhes que administrassem o
+            sacramento aos membros de Sua Igreja. Ele afirmou: “E sempre
+            procurareis fazer isto tal como eu fiz, da mesma forma que eu parti
+            o pão, abençoei-o e dei-o a vós” (3 Néfi 18:5 e 6). Reunir-se com
+            frequência e participar dignamente do sacramento é também um
+            mandamento do Senhor em nossos dias (Doutrina e Convênios 20:75 e
+            59:9).
+          </i>
+        </>
+
         <div className="sacramento-cards-container">
           <div className="sacramento-card" onClick={handleBlessingCardClick}>
             <img src={iconPao} alt="Bênção do Pão" />
             <span className="sacramento-card-title">Bênção do Pão</span>
           </div>
-          <div className="sacramento-card" onClick={handleBlessingWaterCardClick}>
+          <div
+            className="sacramento-card"
+            onClick={handleBlessingWaterCardClick}
+          >
             <img src={iconAgua} alt="Bênção da Água" />
             <span className="sacramento-card-title">Bênção da Água</span>
           </div>
