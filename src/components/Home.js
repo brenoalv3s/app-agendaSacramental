@@ -13,7 +13,6 @@ import Menu from "./Menu";
 import HisFreq from "./HistoricoFrequencia";
 import LoadingScreen from "./LoadingScreen";
 import "./Home.css";
-import capa from '../image/capa.png'
 
 const Home = () => {
   const [nomeUnidade, setNomeUnidade] = useState("");
@@ -63,7 +62,6 @@ const Home = () => {
   return (
     <div>
       <Navbar nomeUnidade={nomeUnidade} />
-      <img src={capa} alt="header" className="header" />
       <h1 className="home-title">
         Bem-vindo à agenda da <br /> Ala {nomeUnidade || "Não encontrado"}!
       </h1>

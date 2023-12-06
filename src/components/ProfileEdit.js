@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getFirestore, updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import './ProfileEdit.css';
-import iconProfile from '../image/icon-profile-menu.png'
+import iconProfile from '../image/icon-profile.png'
 
 const ProfileEdit = () => {
   const navigate = useNavigate();

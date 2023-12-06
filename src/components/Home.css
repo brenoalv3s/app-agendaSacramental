@@ -5,7 +5,7 @@
 }
 
 .home-title {
-  font-size: 10vw; /* Ajuste conforme necessário */
+  font-size: 10vw;
   padding: 15px;
   margin: 15% auto;
   margin-top: 15%;
@@ -34,16 +34,10 @@
   
   .home-title {
     font-size: 7vw;
-    margin-top: -3%;
     margin-left: 10px;
   }
   
   .loading, .error {
     font-size: 16px;
   }
-}
-
-.header {
-  width: 100%;
-  height: 50%;
 }

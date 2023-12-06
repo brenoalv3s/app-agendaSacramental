@@ -14,9 +14,9 @@
   }
   
   .profile-icon {
+    margin-left: 89%;
     width: 13%;
-    margin-left: 86%;
-    margin-top: 32%;
+    z-index: 1000;
   }
   
   .profile-dropdown {

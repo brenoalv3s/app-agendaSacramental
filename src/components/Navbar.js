@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Navbar.css'
-import iconProfile from '../image/icon-profile-menu.png'
+import iconProfile from '../image/icon-profile.png'
 
 const Navbar = ({ nomeUnidade }) => {
   const navigate = useNavigate();
