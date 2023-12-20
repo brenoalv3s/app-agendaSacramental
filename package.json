@@ -8,6 +8,7 @@
     "date-fns": "^2.30.0",
     "domexception": "^4.0.0",
     "firebase": "^9.23.0",
+    "openai": "^4.24.0",
     "react": "^18.2.0",
     "react-datepicker": "^4.23.0",
     "react-dom": "^18.2.0",

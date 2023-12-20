@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { getFirestore, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { firebaseApp } from '../config/firebaseConfig';
 import './MaisAcessados.css';
 
-// Importe as imagens corretamente
+// Import the images correctly
 import agendaIcon from '../image/icon-agenda.png';
 import sacramentoIcon from '../image/icon-sacramento.png';
 import frequenciaIcon from '../image/icon-frequencia.png';
@@ -15,13 +21,13 @@ const MostAccessedMenus = () => {
   const [mostAccessedMenus, setMostAccessedMenus] = useState([]);
   const navigate = useNavigate();
 
-  // Mapeie os caminhos (paths) para as imagens correspondentes
+  // Map paths to corresponding images
   const pathToIcon = {
     '/agenda': agendaIcon,
     '/sacramento': sacramentoIcon,
     '/frequencia': frequenciaIcon,
     '/topicos': topicosIcon,
-    // Adicione mais mapeamentos conforme necessário
+    // Add more mappings as needed
   };
 
   useEffect(() => {
@@ -51,49 +57,47 @@ const MostAccessedMenus = () => {
         })
       : () => {};
 
-    // Chama a função uma vez ao carregar o componente
+    // Call the function once when the component is loaded
     if (auth.currentUser) {
       fetchFirebaseMenus(auth.currentUser);
     }
 
     return () => {
-      // Remova a assinatura do listener ao desmontar o componente
+      // Remove the listener subscription when unmounting the component
       unsubscribe();
     };
-  }, []); // Array vazio para garantir que o useEffect seja executado apenas uma vez
-
-  useEffect(() => {
-    const storedMenus = localStorage.getItem('mostAccessedMenus');
-    const initialMenus = storedMenus ? JSON.parse(storedMenus) : [];
-    setMostAccessedMenus(initialMenus);
-  }, []); // Carregar menus do localStorage apenas uma vez no início
+  }, []); // Empty array to ensure useEffect runs only once
 
   const registrarInteracaoMenu = async (menu) => {
     if (menu && menu.name && menu.path) {
       navigate(menu.path);
-  
-      // Verifique se mostAccessedMenus não é undefined antes de acessá-lo
+
+      // Check if mostAccessedMenus is not undefined before accessing it
       const updatedMenus = [
         menu,
-        ...(mostAccessedMenus || []).filter((item) => item.path !== menu.path),
+        ...(mostAccessedMenus || []).filter(
+          (item) => item.path !== menu.path
+        ),
       ].slice(0, 3);
       setMostAccessedMenus(updatedMenus);
-      localStorage.setItem('mostAccessedMenus', JSON.stringify(updatedMenus));
-  
+      localStorage.setItem(
+        'mostAccessedMenus',
+        JSON.stringify(updatedMenus)
+      );
+
       try {
         const auth = getAuth(firebaseApp);
         const db = getFirestore(firebaseApp);
-  
-        // Verifique se auth.currentUser não é undefined antes de acessá-lo
+
+        // Check if auth.currentUser is not undefined before accessing it
         const userDocRef = doc(db, 'alas', auth.currentUser?.uid);
+
         await updateDoc(userDocRef, { menus: updatedMenus });
       } catch (error) {
         console.error('Erro ao enviar menu para o Firebase:', error);
       }
     }
   };
-  
-  
 
   return (
     <div className="menu-cards-container">
@@ -110,7 +114,9 @@ const MostAccessedMenus = () => {
           ))}
         </div>
       ) : (
-        <p className="no-accessed-menus-text">O histórico de acesso será apresentado aqui</p>
+        <p className="no-accessed-menus-text">
+          O histórico de acesso será apresentado aqui
+        </p>
       )}
     </div>
   );

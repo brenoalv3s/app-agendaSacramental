@@ -174,7 +174,12 @@ const ProfileEdit = () => {
       <div className="buttons-container">
         {isEditMode && <button className="profile-edit-cancel-btn" onClick={handleCancelClick}>Cancelar</button>}
         {isEditMode && <button className="profile-edit-save-btn" onClick={handleSave}>Salvar</button>}
-        <button className='profile-edit-close' onClick={handleClose}>X</button>
+        <img
+          className="profile-edit-close"
+          src="./Fechar.png"
+          alt="Fechar"
+          onClick={handleClose}
+        />
         {!isEditMode && <button className="profile-edit-btn" onClick={handleEditClick}>Editar</button>}
       </div>
     </div>

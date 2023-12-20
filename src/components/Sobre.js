@@ -55,9 +55,12 @@ const About = () => {
         </i>
       </p>
       <div className="buttons-container">
-        <button className="profile-edit-close" onClick={handleClose}>
-          X
-        </button>
+        <img
+          className="profile-edit-close"
+          src="./Fechar.png"
+          alt="Fechar"
+          onClick={handleClose}
+        />
       </div>
     </div>
   );

@@ -5,28 +5,21 @@
 }
 
 .home-title {
-  font-size: 10vw;
-  padding: 15px;
-  margin: 15% auto;
-  margin-top: 15%;
-  margin-bottom: -5%;
-  margin-left: 15px;
+  font-size: 5vw;
+  padding: 10px;
+  margin: 10% auto;
+  margin-left: 5%;
   color: #007D85;
   text-align: left;
 }
 
-.loading {
+.loading, .error {
   font-size: 18px;
   color: #888;
 }
 
-.error {
-  font-size: 18px;
-  color: red;
-}
-
 /* Estilos responsivos */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1000px) {
   .home-container {
     max-width: 100%;
     padding: 10px;

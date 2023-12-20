@@ -332,12 +332,12 @@ const Frequencia = () => {
               </>
             ) : (
               <>
-                <button
+                <img
                   className="profile-edit-close"
+                  src="./Fechar.png"
+                  alt="Fechar"
                   onClick={handleVoltarClick}
-                >
-                  X
-                </button>
+                />
                 <h3 className="titulo-frequencia">Histórico de Frequências</h3>
                 <br />
                 <label className="frequencia-label">Pesquisar por data</label>

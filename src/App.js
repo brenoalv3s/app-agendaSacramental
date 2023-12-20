@@ -36,7 +36,7 @@ function App() {
           <Route path="/frequencia" element={<Frequencia />} />
           <Route path="/topicos" element={<Topicos />} />
           <Route path="/discursantes" element={<Orador />} />
-          <Route path="/TopicosEvangelho" element={<TopicosEvangelho />} />
+          <Route path="/topicos-evangelho" element={<TopicosEvangelho />} />
         </Routes>
       </Router>
     </FirebaseAppProvider>

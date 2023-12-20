@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { firebaseApp } from '../config/firebaseConfig';
 
@@ -21,7 +21,7 @@ const menus = [
   { id: 1, name: 'Agenda', iconEnable: agendaIconEnable, iconDisable: agendaIconDisable, path: '/agenda', nome: 'Agenda' },
   { id: 2, name: 'Sacramento', iconEnable: sacramentoIconEnable, iconDisable: sacramentoIconDisable, path: '/sacramento', nome: 'Sacramento' },
   { id: 3, name: 'Frequência', iconEnable: frequenciaIconEnable, iconDisable: frequenciaIconDisable, path: '/frequencia', nome: 'Frequência' },
-  { id: 4, name: 'Tópicos', iconEnable: topicosIconEnable, iconDisable: topicosIconDisable, path: '/topicos', nome: 'Tópicos' },
+  { id: 4, name: 'Tópicos e Oradores', iconEnable: topicosIconEnable, iconDisable: topicosIconDisable, path: '/topicos', nome: 'Tópicos e Oradores' },
 ];
 
 const Menu = () => {
@@ -45,9 +45,7 @@ const Menu = () => {
   }, []);
 
   useEffect(() => {
-    // Verifica se o caminho atual corresponde a algum dos caminhos dos menus
     const currentMenu = menus.find(menu => location.pathname === menu.path);
-
     if (currentMenu) {
       setActiveMenu(currentMenu.id);
     } else {
@@ -58,12 +56,27 @@ const Menu = () => {
   const handleNavigation = async (path, menuId) => {
     navigate(path, { state: { menuId } });
 
-    // const db = getFirestore(firebaseApp);
     const auth = getAuth(firebaseApp);
     const user = auth.currentUser;
 
-    if (user) {
-      // const userDocRef = doc(db, 'alas', user.uid);
+    if (user && menuId !== 0) { // Exclude 'Home' menu (menuId 0) from saving
+      const db = getFirestore(firebaseApp);
+      const userDocRef = doc(db, 'alas', user.uid);
+
+      try {
+        const userDocSnapshot = await getDoc(userDocRef);
+        const userMenus = userDocSnapshot.data()?.menus || [];
+
+        // Update the first menu clicked, maintaining the limit of 3 menus
+        const updatedMenus = [
+          { id: menuId, path, nome: menus[menuId].name },
+          ...(userMenus || []).filter((item) => item.id !== menuId),
+        ].slice(0, 3);
+
+        await updateDoc(userDocRef, { menus: updatedMenus });
+      } catch (error) {
+        console.error('Error updating menu in Firebase:', error);
+      }
     }
   };
 

@@ -1,0 +1,23 @@
+.image-button-editar-ordem {
+    display: flex;
+    width: 8%;
+    margin-left: 90%;
+    margin-top: -12%;
+}
+
+.image-button-pesquisar-ordem {
+    display: flex;
+    width: 7%;
+    margin-left: 90%;
+    margin-top: -12%;
+}
+
+.image-button-editar-oradores {
+    cursor: pointer;
+    margin-bottom: 10%;
+    width: 55.2%;
+  }
+
+  .image-button-excluir-oradores {
+    width: 50%;
+  }
