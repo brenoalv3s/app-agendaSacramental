@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sobre.css";
+import FecharIcon from "../image/fechar.png"
 
 const About = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const About = () => {
       <div className="buttons-container">
         <img
           className="profile-edit-close"
-          src="./Fechar.png"
+          src={FecharIcon}
           alt="Fechar"
           onClick={handleClose}
         />

@@ -12,6 +12,7 @@ import Menu from "./Menu";
 import OradorIcon from "../image/icon-discurso.png";
 import PesquisarTema from "../image/lupa.png";
 import EditarOrdem from "../image/editar-ordem.png";
+import FecharIcon from "../image/fechar.png"
 import DatePicker from "react-datepicker";
 import { startOfWeek } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -253,7 +254,7 @@ const Oradores = () => {
           <>
             <img
               className="profile-edit-close"
-              src="./Fechar.png"
+              src={FecharIcon}
               alt="Fechar"
               onClick={handleVoltarClick}
             />

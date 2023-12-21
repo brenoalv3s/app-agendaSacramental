@@ -12,6 +12,7 @@ import { getAuth } from "firebase/auth";
 import Menu from "./Menu";
 import "./Frequencia.css";
 import frequenciaIcon from "../image/icon-frequencia.png";
+import FecharIcon from "../image/fechar.png"
 
 const Frequencia = () => {
   const [nomeUnidade, setNomeUnidade] = useState("");
@@ -334,7 +335,7 @@ const Frequencia = () => {
               <>
                 <img
                   className="profile-edit-close"
-                  src="./Fechar.png"
+                  src={FecharIcon}
                   alt="Fechar"
                   onClick={handleVoltarClick}
                 />

@@ -4,6 +4,7 @@ import { getFirestore, updateDoc, doc, getDoc, setDoc } from "firebase/firestore
 import { getAuth } from "firebase/auth";
 import './ProfileEdit.css';
 import iconProfile from '../image/icon-profile.png'
+import FecharIcon from "../image/fechar.png"
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -176,7 +177,7 @@ const ProfileEdit = () => {
         {isEditMode && <button className="profile-edit-save-btn" onClick={handleSave}>Salvar</button>}
         <img
           className="profile-edit-close"
-          src="./Fechar.png"
+          src={FecharIcon}
           alt="Fechar"
           onClick={handleClose}
         />

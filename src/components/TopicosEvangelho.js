@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import TemasIcon from "../image/icon-temas.png";
+import FecharIcon from "../image/fechar.png"
 import "./Oradores.css";
 import "./TopicosEvangelho.css"
 import OpenAI from "openai";
@@ -114,7 +115,7 @@ const Temas = () => {
             <div>
               <img
                 className="profile-edit-close"
-                src="./Fechar.png"
+                src={FecharIcon}
                 alt="Fechar"
                 onClick={handleFecharResultado}
               />
