@@ -27,7 +27,7 @@
   padding: 5px;
   margin: 5px;
   width: 28.2vw;
-  height: 23vw;
+  height: 23.2vw;
   display:inline-flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +44,7 @@
 
 .icons {
   width: 80%;
-  margin-left: 8%;
+  margin-left: 6%;
   height: 50%;
   object-fit: contain;
 }
@@ -55,7 +55,7 @@
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space:initial;
   text-align: center;
   margin-top: 5px;
   font-size: 3.2vw;

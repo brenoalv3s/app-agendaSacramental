@@ -2,21 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import TemasIcon from "../image/icon-temas.png";
-import FecharIcon from "../image/fechar.png"
-import "./Oradores.css";
-import "./TopicosEvangelho.css"
+import FecharIcon from "../image/fechar.png";
 import OpenAI from "openai";
+import "./TopicosEvangelho.css"
 
 const Temas = () => {
     const navigate = useNavigate();
     const [nomeUnidade, setNomeUnidade] = useState("");
     const [numeroUnidade, setNumeroUnidade] = useState("");
     const [tema, setTema] = useState("");
-    const [respostaChatGPT, setRespostaChatGPT] = useState("");
+    const [respostaChatGPT, setRespostaChatGPT] = useState([]);
     const [exibirResultado, setExibirResultado] = useState(false);
     const [exibirLoading, setExibirLoading] = useState(false);
     const [temaSelecionado, setTemaSelecionado] = useState(null);
-    const [exibirCamposPesquisa, setExibirCamposPesquisa] = useState(true); // Adicionado estado para controlar a exibição dos campos de pesquisa
+    const [exibirCamposPesquisa, setExibirCamposPesquisa] = useState(true);
   
     useEffect(() => {
       const storedNomeUnidade = localStorage.getItem("nomeUnidade");
@@ -30,29 +29,32 @@ const Temas = () => {
   
     const handlePesquisar = async () => {
       setExibirLoading(true);
-      setExibirCamposPesquisa(false);
-      
+  
       const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
       const openai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
   
       try {
         const completion = await openai.chat.completions.create({
           messages: [
-            { role: "user", content: `Crie uma lista de temas de A Igreja de Jesus Cristo dos Santos dos Últimos dias sobre ${tema}
-            Retorne o resultdo da seguinte maneira:
-            Tema sugerido: Crie temas sobre o assunto
-            Referência das Escrituras: (livro - Cap:Vers)
-            Outras fontes: nome do orador - Conferência Geral de mês de ano` },
+            {
+              role: "user",
+              content: `Crie uma lista de temas de A Igreja de Jesus Cristo dos Santos dos Últimos dias sobre ${tema} 
+              Retorne o resultado da seguinte maneira: 
+              Tema sugerido: Crie temas sobre o assunto 
+              Referência das Escrituras: (livro - Cap:Vers) 
+              Outras fontes: nome do orador - Conferência Geral de mês de ano`,
+            },
           ],
           model: "gpt-3.5-turbo",
         });
   
-        const respostaFormatada = completion.choices[0].message.content.replace(/\n/g, '<br />');
+        const respostaFormatada = completion.choices[0].message.content.split("\n\n");
   
         setRespostaChatGPT(respostaFormatada);
         setExibirResultado(true);
+        setExibirCamposPesquisa(false); // Oculta os campos de pesquisa após a pesquisa
       } catch (error) {
-        console.error('Erro ao chamar a API do ChatGPT:', error.message || error);
+        console.error("Erro ao chamar a API do ChatGPT:", error.message || error);
       } finally {
         setExibirLoading(false);
       }
@@ -61,18 +63,15 @@ const Temas = () => {
     const handleFecharResultado = () => {
       setExibirResultado(false);
       setTema("");
-      setExibirCamposPesquisa(true);
+      setExibirCamposPesquisa(true); // Mostra os campos de pesquisa ao fechar o resultado
     };
   
-    const handleParagrafoClicado = (paragrafo) => {
-      const paragrafoSemNumero = paragrafo.replace(/^\d+\.\s*|\d+\)\s*|Tema sugerido:|' '|/g, '');
-  
-      setTemaSelecionado(paragrafoSemNumero);
-      localStorage.setItem("temaSelecionado", paragrafoSemNumero);
-  
+    const handleConjuntoClicado = (conjunto, index) => {
+      localStorage.setItem("conjuntoSelecionado", conjunto.replace("Tema sugerido: ", ""));
+      setTemaSelecionado(conjunto);
       setTimeout(() => {
-        navigate("/discursantes");
-      }, 2000);
+          navigate("/discursantes");
+        }, 2000);
     };
   
     return (
@@ -82,7 +81,7 @@ const Temas = () => {
           <span className="sacramento-info-name">Ala {nomeUnidade}</span>
           <span className="sacramento-info-number">{numeroUnidade}</span>
   
-          {exibirCamposPesquisa && (
+          {exibirCamposPesquisa && ( // Mostra os campos de pesquisa apenas se exibirCamposPesquisa for verdadeiro
             <>
               <h3 className="titulo-frequencia">Pesquisar Tópicos</h3>
               <br />
@@ -98,11 +97,9 @@ const Temas = () => {
                   onChange={(e) => setTema(e.target.value)}
                 />
               </div>
+              {exibirLoading && <h4 className="titulo-frequencia">Pesquisando tópico...</h4>}
               <div className="buttons-container">
-                <button
-                  className="frequencia-btn"
-                  onClick={handlePesquisar}
-                >
+                <button className="frequencia-btn" onClick={handlePesquisar}>
                   Pesquisar
                 </button>
               </div>
@@ -110,7 +107,6 @@ const Temas = () => {
             </>
           )}
   
-          {exibirLoading && <h4 className="titulo-frequencia">Pesquisando tópico...</h4>}
           {exibirResultado && (
             <div>
               <img
@@ -122,15 +118,22 @@ const Temas = () => {
               <h3 className="titulo-frequencia">Resultados sobre {tema}:</h3>
               <br />
               <div>
-                {respostaChatGPT.split('<br />').map((paragrafo, index) => (
+                {respostaChatGPT.map((conjunto, index) => (
                   <p
                     key={index}
                     className="paragrafo-topicos"
-                    onClick={() => handleParagrafoClicado(paragrafo)}
-                    style={{ color: temaSelecionado === paragrafo ? "#007D85" : "#000000" }}
+                    onClick={() => handleConjuntoClicado(conjunto, index)}
+                    style={{
+                      color: temaSelecionado === conjunto ? "#007D85" : "#000000",
+                      fontWeight: temaSelecionado === conjunto ? "bold" : "normal",
+                    }}
                   >
-                    {paragrafo}
-                    <br />
+                    {conjunto.split("\n").map((linha, i) => (
+                      <React.Fragment key={i}>
+                        {linha}
+                        <br />
+                      </React.Fragment>
+                    ))}
                   </p>
                 ))}
               </div>

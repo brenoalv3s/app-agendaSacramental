@@ -111,7 +111,7 @@ const Oradores = () => {
       fetchHistoricoOradoresFromFirestore();
     }
 
-    const storedTemaSelecionado = localStorage.getItem("temaSelecionado");
+    const storedTemaSelecionado = localStorage.getItem("conjuntoSelecionado");
     if (storedTemaSelecionado) {
       setTema(storedTemaSelecionado);
     }
@@ -168,30 +168,28 @@ const Oradores = () => {
         const dataFormatada = formatarData(dataDiscurso);
 
         // Formatando a ordem como string
-        const ordemStr = ordem.toString();
+        // const ordemStr = ordem.toString();
 
         // Verificando se já existe a data no objeto
         if (historicoObjeto[dataFormatada]) {
-          // Verificando se já existe a ordem para a data
-          if (historicoObjeto[dataFormatada][ordemStr]) {
-            // Atualiza os dados para a ordem existente
-            historicoObjeto[dataFormatada][ordemStr] = {
-              orador,
-              tema,
-              dataDiscurso: dataFormatada,
-            };
-          } else {
-            // Adiciona uma nova ordem para a data existente
-            historicoObjeto[dataFormatada][ordemStr] = {
-              orador,
-              tema,
-              dataDiscurso: dataFormatada,
-            };
-          }
+          const ordensRegistradas = Object.keys(
+            historicoObjeto[dataFormatada]
+          ).map((ordem) => parseInt(ordem, 10));
+
+          const proximaOrdem = encontrarProximaOrdem(ordensRegistradas);
+          const ordemAtualizada = proximaOrdem > ordem ? proximaOrdem : ordem;
+
+          setOrdem(ordemAtualizada);
+          const ordemStrAtualizada = ordemAtualizada.toString();
+
+          historicoObjeto[dataFormatada][ordemStrAtualizada] = {
+            orador,
+            tema,
+            dataDiscurso: dataFormatada,
+          };
         } else {
-          // Adiciona a data e a ordem se não existirem
           historicoObjeto[dataFormatada] = {
-            [ordemStr]: {
+            "1": {
               orador,
               tema,
               dataDiscurso: dataFormatada,
@@ -206,6 +204,7 @@ const Oradores = () => {
         handleLimparCampos();
         setDataDiscurso(new Date(dataDiscurso));
         fetchHistoricoOradoresFromFirestore();
+        localStorage.removeItem("conjuntoSelecionado");
       }
     } catch (error) {
       console.error("Erro ao salvar registro no histórico de oradores:", error);
@@ -213,9 +212,7 @@ const Oradores = () => {
   };
 
   const handleLimparCampos = () => {
-    if (editandoOrdem) {
-      setOrdem(ordem + 1);
-    }
+    setOrdem(ordem + 1);
     setOrador("");
     setTema("");
     setDataDiscurso(new Date());
@@ -223,6 +220,7 @@ const Oradores = () => {
   };
 
   const handleRegistrarClick = () => {
+    setOrdem(ordem);
     handleRegistrarOrador();
   };
 
@@ -237,6 +235,20 @@ const Oradores = () => {
 
   const handlePesquisarTema = () => {
     navigate("/topicos-evangelho");
+  };
+
+  const encontrarProximaOrdem = (ordensRegistradas) => {
+    let proximaOrdem = 1;
+    const ordensOrdenadas = ordensRegistradas.sort((a, b) => a - b);
+
+    for (let i = 0; i < ordensOrdenadas.length; i++) {
+      if (ordensOrdenadas[i] !== proximaOrdem) {
+        break;
+      }
+      proximaOrdem++;
+    }
+
+    return proximaOrdem;
   };
 
   return (

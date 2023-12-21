@@ -21,7 +21,7 @@ const menus = [
   { id: 1, name: 'Agenda', iconEnable: agendaIconEnable, iconDisable: agendaIconDisable, path: '/agenda', nome: 'Agenda' },
   { id: 2, name: 'Sacramento', iconEnable: sacramentoIconEnable, iconDisable: sacramentoIconDisable, path: '/sacramento', nome: 'Sacramento' },
   { id: 3, name: 'Frequência', iconEnable: frequenciaIconEnable, iconDisable: frequenciaIconDisable, path: '/frequencia', nome: 'Frequência' },
-  { id: 4, name: 'Tópicos e Oradores', iconEnable: topicosIconEnable, iconDisable: topicosIconDisable, path: '/topicos', nome: 'Tópicos e Oradores' },
+  { id: 4, name: 'Tópicos/Oradores', iconEnable: topicosIconEnable, iconDisable: topicosIconDisable, path: '/topicos', nome: 'Tópicos/Oradores' },
 ];
 
 const Menu = () => {
