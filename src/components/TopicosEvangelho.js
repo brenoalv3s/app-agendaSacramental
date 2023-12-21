@@ -31,7 +31,7 @@ const Temas = () => {
       setExibirLoading(true);
       setExibirCamposPesquisa(false); // Oculta os campos de pesquisa ao iniciar a pesquisa
   
-      const apiKey = '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';
+      const apiKey = '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';
       const openai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
   
       try {

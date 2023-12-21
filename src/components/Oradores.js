@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getAuth } from "firebase/auth";
 import {
   getFirestore,
@@ -36,23 +36,7 @@ const Oradores = () => {
   const [searchDate, setSearchDate] = useState("");
   const [editandoOrdem, setEditandoOrdem] = useState(false);
 
-  useEffect(() => {
-    const storedNomeUnidade = localStorage.getItem("nomeUnidade");
-    const storedNumeroUnidade = localStorage.getItem("numeroUnidade");
-
-    if (storedNomeUnidade && storedNumeroUnidade) {
-      setNomeUnidade(storedNomeUnidade);
-      setNumeroUnidade(storedNumeroUnidade);
-      fetchHistoricoOradoresFromFirestore();
-    }
-
-    const storedTemaSelecionado = localStorage.getItem("temaSelecionado");
-    if (storedTemaSelecionado) {
-      setTema(storedTemaSelecionado);
-    }
-  }, []);
-
-  const fetchHistoricoOradoresFromFirestore = async () => {
+  const fetchHistoricoOradoresFromFirestore = useCallback(async () => {
     try {
       const firestore = getFirestore();
       const auth = getAuth();
@@ -114,7 +98,24 @@ const Oradores = () => {
         error
       );
     }
-  };
+  }, [searchDate]);
+
+  useEffect(() => {
+    const storedNomeUnidade = localStorage.getItem("nomeUnidade");
+    const storedNumeroUnidade = localStorage.getItem("numeroUnidade");
+
+    if (storedNomeUnidade && storedNumeroUnidade) {
+      setNomeUnidade(storedNomeUnidade);
+      setNumeroUnidade(storedNumeroUnidade);
+      fetchHistoricoOradoresFromFirestore();
+    }
+
+    const storedTemaSelecionado = localStorage.getItem("temaSelecionado");
+    if (storedTemaSelecionado) {
+      setTema(storedTemaSelecionado);
+    }
+  }, [fetchHistoricoOradoresFromFirestore]);
+
 
   // Função auxiliar para verificar se uma data é válida
   const isValidDate = (dateString) => {
@@ -124,7 +125,6 @@ const Oradores = () => {
 
   const handleHistoricoOradoresClick = () => {
     setExibirHistorico(true);
-    fetchHistoricoOradoresFromFirestore();
   };
 
   const handleVoltarClick = () => {
@@ -221,11 +221,8 @@ const Oradores = () => {
     setEditandoOrdem(false);
   };
 
-  const handleRegistrarClick = async () => {
-    const novoOradorRegistrado = await handleRegistrarOrador();
-    if (novoOradorRegistrado) {
-      console.log("Orador registrado:", novoOradorRegistrado);
-    }
+  const handleRegistrarClick = () => {
+    handleRegistrarOrador();
   };
 
   const handleOrdemChange = (e) => {
