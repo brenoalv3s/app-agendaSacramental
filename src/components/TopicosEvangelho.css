@@ -1,3 +1,10 @@
 .paragrafo-topicos {
     margin-bottom: 5%;
 }
+
+.reload{
+    position: absolute;
+    margin-top: -3%;
+    right: 47%;
+    width: 7%;
+}

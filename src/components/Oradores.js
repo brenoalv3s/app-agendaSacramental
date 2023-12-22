@@ -11,8 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Menu from "./Menu";
 import OradorIcon from "../image/icon-discurso.png";
 import PesquisarTema from "../image/lupa.png";
-import EditarOrdem from "../image/editar-ordem.png";
-import FecharIcon from "../image/fechar.png"
+import FecharIcon from "../image/fechar.png";
 import DatePicker from "react-datepicker";
 import { startOfWeek } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -33,9 +32,9 @@ const Oradores = () => {
   });
   const [exibirHistorico, setExibirHistorico] = useState(false);
   const [historicoOradores, setHistoricoOradores] = useState([]);
-  const [limiteAtingido] = useState(false);
-  const [searchDate, setSearchDate] = useState("");
+  const [searchDate, setSearchDate] = useState(null);
   const [editandoOrdem, setEditandoOrdem] = useState(false);
+  const [erroRegistro, setErroRegistro] = useState(null);
 
   const fetchHistoricoOradoresFromFirestore = useCallback(async () => {
     try {
@@ -82,22 +81,31 @@ const Oradores = () => {
               );
             }
 
-            // Filtrar os resultados com base na data de pesquisa
             if (searchDate) {
-              historicoArray = historicoArray.filter(
-                (item) => item.dataDiscurso && item.dataDiscurso >= searchDate
+              const formattedSearchDate = formatarData(searchDate);
+              historicoArray = historicoArray.filter((item) =>
+                item.oradores.some(
+                  (oradorItem) =>
+                    oradorItem.dataDiscurso &&
+                    oradorItem.dataDiscurso === formattedSearchDate
+                )
               );
             }
-
             setHistoricoOradores(historicoArray);
+            return;
           }
         }
       }
+
+      // Se não houver dados ou se ocorrer algum erro, define o histórico como vazio
+      setHistoricoOradores([]);
     } catch (error) {
       console.error(
         "Erro ao buscar histórico de oradores do Firestore:",
         error
       );
+      // Em caso de erro, também define o histórico como vazio
+      setHistoricoOradores([]);
     }
   }, [searchDate]);
 
@@ -117,8 +125,6 @@ const Oradores = () => {
     }
   }, [fetchHistoricoOradoresFromFirestore]);
 
-
-  // Função auxiliar para verificar se uma data é válida
   const isValidDate = (dateString) => {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     return dateString.match(regex) !== null;
@@ -142,7 +148,7 @@ const Oradores = () => {
       return `${dia}/${mes}/${ano}`;
     } else {
       console.error("Data inválida:", data);
-      return null; // ou outra manipulação de erro conforme necessário
+      return null;
     }
   };
 
@@ -151,77 +157,109 @@ const Oradores = () => {
       const firestore = getFirestore();
       const auth = getAuth();
       const user = auth.currentUser;
-
+  
       if (user) {
         const historicoDocPath = `discursantes/${user.uid}`;
         const historicoDoc = doc(firestore, historicoDocPath);
         const historicoSnap = await getDoc(historicoDoc);
-
+  
         if (!historicoSnap.exists()) {
           await setDoc(historicoDoc, { dataDiscurso: {} });
         }
-
+  
         const historicoData = historicoSnap.data();
         const historicoObjeto = historicoData.dataDiscurso || {};
-
-        // Formatando a data
+  
         const dataFormatada = formatarData(dataDiscurso);
-
-        // Formatando a ordem como string
-        // const ordemStr = ordem.toString();
-
-        // Verificando se já existe a data no objeto
-        if (historicoObjeto[dataFormatada]) {
-          const ordensRegistradas = Object.keys(
-            historicoObjeto[dataFormatada]
-          ).map((ordem) => parseInt(ordem, 10));
-
-          const proximaOrdem = encontrarProximaOrdem(ordensRegistradas);
-          const ordemAtualizada = proximaOrdem > ordem ? proximaOrdem : ordem;
-
-          setOrdem(ordemAtualizada);
-          const ordemStrAtualizada = ordemAtualizada.toString();
-
-          historicoObjeto[dataFormatada][ordemStrAtualizada] = {
-            orador,
-            tema,
-            dataDiscurso: dataFormatada,
-          };
-        } else {
-          historicoObjeto[dataFormatada] = {
-            "1": {
+  
+        if (
+          editandoOrdem || // Permitir mais de 3 oradores se estiver editando a ordem
+          !historicoObjeto[dataFormatada] || // Adicionado para corrigir o problema ao registrar o primeiro orador
+          Object.keys(historicoObjeto[dataFormatada]).length < 3
+        ) {
+          if (
+            historicoObjeto[dataFormatada] &&
+            historicoObjeto[dataFormatada][ordem] &&
+            historicoObjeto[dataFormatada][ordem].orador
+          ) {
+            setErroRegistro(
+              "Já existe discursante registrado para a ordem e data desejada"
+            );
+  
+            setTimeout(() => {
+              setErroRegistro(null);
+              handleLimparCampos();
+              setOrdem(null);
+              setDataDiscurso("");
+            }, 3000);
+  
+            return;
+          }
+  
+          if (historicoObjeto[dataFormatada]) {
+            const ordensRegistradas = Object.keys(
+              historicoObjeto[dataFormatada]
+            ).map((ordem) => parseInt(ordem, 10));
+  
+            const proximaOrdem = encontrarProximaOrdem(ordensRegistradas);
+            const ordemAtualizada =
+              proximaOrdem > ordem ? proximaOrdem : ordem;
+  
+            setOrdem(ordemAtualizada);
+            const ordemStrAtualizada = ordemAtualizada.toString();
+  
+            historicoObjeto[dataFormatada][ordemStrAtualizada] = {
               orador,
               tema,
               dataDiscurso: dataFormatada,
-            },
-          };
+            };
+          } else {
+            historicoObjeto[dataFormatada] = {
+              1: {
+                orador,
+                tema,
+                dataDiscurso: dataFormatada,
+              },
+            };
+          }
+  
+          setErroRegistro(null);
+          await updateDoc(historicoDoc, {
+            dataDiscurso: historicoObjeto,
+          });
+  
+          handleLimparCampos();
+          setDataDiscurso(new Date(dataDiscurso));
+          fetchHistoricoOradoresFromFirestore();
+          localStorage.removeItem("conjuntoSelecionado");
+        } else {
+          setErroRegistro("Alerta: 3 oradores registrados");
+  
+          setTimeout(() => {
+            setErroRegistro(null);
+            handleLimparCampos();
+            setDataDiscurso("");
+            setOrdem("");
+          }, 3000);
         }
-
-        await updateDoc(historicoDoc, {
-          dataDiscurso: historicoObjeto,
-        });
-
-        handleLimparCampos();
-        setDataDiscurso(new Date(dataDiscurso));
-        fetchHistoricoOradoresFromFirestore();
-        localStorage.removeItem("conjuntoSelecionado");
       }
     } catch (error) {
       console.error("Erro ao salvar registro no histórico de oradores:", error);
     }
   };
+  
 
-  const handleLimparCampos = () => {
-    setOrdem(ordem + 1);
+  const handleLimparCampos = (e) => {
     setOrador("");
     setTema("");
     setDataDiscurso(new Date());
     setEditandoOrdem(false);
+    setOrdem(ordem + 1)
   };
 
   const handleRegistrarClick = () => {
-    setOrdem(ordem);
     handleRegistrarOrador();
+    setEditandoOrdem(false);
   };
 
   const handleOrdemChange = (e) => {
@@ -229,9 +267,6 @@ const Oradores = () => {
     setEditandoOrdem(true);
   };
 
-  const handleEditarOrdem = () => {
-    setEditandoOrdem(true);
-  };
 
   const handlePesquisarTema = () => {
     navigate("/topicos-evangelho");
@@ -304,9 +339,7 @@ const Oradores = () => {
                         ))
                       ) : (
                         <tr key={index}>
-                          <td>{`Sem oradores registrados`}</td>
-                          <td></td>
-                          <td></td>
+                          <td colSpan="3">Nenhum discursante registrado</td>
                         </tr>
                       )}
                     </React.Fragment>
@@ -314,9 +347,17 @@ const Oradores = () => {
                 </tbody>
               </table>
             ) : (
-              <p className="error-message">
-                Nenhum discursante encontrado para a data.
-              </p>
+              <table className="historico-table">
+                <tbody>
+                  <tr>
+                    <td colSpan="3">
+                      {searchDate
+                        ? "Nenhum discursante registrado para a data pesquisada"
+                        : "Nenhum discursante registrado"}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             )}
           </>
         ) : (
@@ -329,23 +370,15 @@ const Oradores = () => {
               </label>
               <div className="ordem-container">
                 <input
-                  type="text"
+                  type="number"
                   id="ordem"
                   className={`frequencia-input ${
                     editandoOrdem ? "editavel" : ""
                   }`}
                   value={ordem}
                   onChange={handleOrdemChange}
-                  readOnly={!editandoOrdem}
-                />
-                <img
-                  className="image-button-editar-ordem"
-                  src={EditarOrdem}
-                  alt="Editar"
-                  onClick={handleEditarOrdem}
                 />
               </div>
-              <br />
               <label className="frequencia-label" htmlFor="orador">
                 Orador:
               </label>
@@ -395,9 +428,7 @@ const Oradores = () => {
                 Registrar
               </button>
             </div>
-            {limiteAtingido && (
-              <p className="error-message">Limite de 3 oradores atingido!</p>
-            )}
+            {erroRegistro && <p className="error-message">{erroRegistro}</p>}
           </>
         )}
       </div>
